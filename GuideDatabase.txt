@@ -1,0 +1,41 @@
+Entity Migration
+====================================
+
+Setup of Entity
+------------------------------------
+1. Run Install-Package EntityFramework, to add the framework in the project
+2. Create the model classes
+3. Create a DbContext derication class
+	3.1 public class MyContext : DbContext 
+	3.2 Ctr: MyContext() : base("TheNameOfTheConnectionString") 
+4. Using the db
+	using (var db = new BlogContext()) 
+    { 
+		db.Blogs.Add(new Blog { Name = "Another Blog " }); 
+		db.SaveChanges(); 
+ 
+		foreach (var blog in db.Blogs) 
+		{
+			Console.WriteLine(blog.Name); 
+		} 
+	} 
+
+
+Update Database
+------------------------------------
+1. add a property to the model or add a new class
+2. Packet Manager Console :  Enable-Migrations
+3. Packet Manager Console :   Add-Migration AddBlogUrl 
+	AddBlogUrl is the name of the changes like Update020
+3. Packet Manager Console :   Update-Database –Verbose 
+	-Verbose to have a full a log of what happened
+	
+
+
+	
+Auto-update of the database structure
+------------------------------------
+1. Add the line in the main of the program
+	Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlogContext, Configuration>()); 
+ 
+           
